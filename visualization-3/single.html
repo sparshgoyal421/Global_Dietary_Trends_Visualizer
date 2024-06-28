@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>zMatcha - Free Html5 Templates</title>
+	<meta name="description" content="Free Responsive Html5 Css3 Templates | zerotheme.com">
+	<meta name="author" content="www.zerotheme.com">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<!-- Definity CSS -->
+	<link href="css/zerogrid.css" rel="stylesheet" media="all" type="text/css">
+	<link href="css/style.css" rel="stylesheet" media="all" type="text/css">
+	<link href="css/menu.css" rel="stylesheet" media="all" type="text/css">
+	<!-- Lightbox -->
+	<link href="css/lightbox.css" rel="stylesheet" media="all" type="text/css">
+	<!-- Video Background -->
+	<link href="css/jquery.mb.ytplayer.min.css" rel="stylesheet" media="all" type="text/css">
+	<!-- Animate.css -->
+	<link href="css/animate.css" rel="stylesheet" media="all" type="text/css">
+
+	<!-- Custom Fonts -->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body id="page-top" class="sub-page">
+
+		<div id="samarth-page-content">
+			<div class="wrap-container zerogrid">
+				<div id="about-us">
+					<script src="https://d3js.org/d3.v3.min.js"></script>
+					<article class="post-entry single-post">
+						<div class="wrap-post">
+							<div class="entry-header">
+								<h1 class="entry-title">The Tree & Wheel of diet</h1>
+							</div>
+							<form>
+								<label><input type="radio" name="mode" value="radialcluster">Radial Cluster</label>
+								<label><input type="radio" name="mode" value="tree">Tree</label>
+								<!-- <label><input type="radio" name="mode" value="cluster" checked>Cluster</label> -->
+							</form>
+							<div id="graph"></div>
+							<div class="entry-content">
+								<h1>How To Interact</h1>
+								<ul>
+									<li>
+										<strong>Select Nutrient View:</strong>
+										<ul>
+											<li>Use the radio buttons labeled "Tree" and "Radial Cluster" to switch
+												between different visualizations of the nutrient data.</li>
+										</ul>
+									</li>
+									<li>
+										<strong>Tree View:</strong>
+										<ul>
+											<li>Choose "Tree" to view the nutrient data represented as a hierarchical
+												tree structure.</li>
+											<li>In the tree view, each node represents a different nutrient category or
+												subcategory.</li>
+											<li>This visualization represents a comprehensive breakdown of various
+												essential
+												nutrients found in food sources. The graph is structured as a node tree,
+												with each
+												node representing a specific nutrient category such as Protein,
+												Carbohydrates, Fats,
+												Minerals, and Vitamins. Within each nutrient category, there are
+												subcategories
+												representing different sources of that nutrient.
+
+												For instance, under Protein, we have categories like Animal Protein,
+												Plant Protein,
+												and Vegan Protein. Each of these subcategories further breaks down into
+												specific
+												food items such as Chicken, Salmon, Lentils, Tofu, and more. Each food
+												item node
+												includes two key pieces of information: the amount of the nutrient (in
+												grams)
+												present per 100 grams of that food item and the energy content (in
+												kilocalories) per
+												100 grams.<br>
+
+												By exploring this graph, one can quickly identify the nutrient content
+												of various
+												food items and understand how different nutrients are distributed across
+												different
+												types of foods. It provides a visual guide to making informed decisions
+												about
+												dietary choices, highlighting the richness of nutrients in different
+												food sources.</li>
+										</ul>
+									</li>
+									<li>
+										<strong>Radial Cluster View:</strong>
+										<ul>
+											<li>Select "Radial Cluster" to switch to a radial cluster representation of
+												the nutrient data.</li>
+											<li>In the radial cluster view, each concentric circle represents a
+												different nutrient category or subcategory.</li>
+											<li>The size of each arch within the circles corresponds to the average
+												quantity of that nutrient in the diet.</li>
+											<li>Compare the sizes of the arches to understand the relative proportions
+												of different nutrients in the diet.</li>
+											<li>
+												This radial cluster visualization offers a unique perspective on the
+												nutrient
+												composition of a diet,
+												resembling a series of concentric pie charts. Each "slice" or "arch" in
+												the radial
+												cluster represents the average quantity of a specific nutrient present
+												in the
+												overall diet.
+												Imagine the center of the radial cluster as the core of a pie chart,
+												with the first
+												circle representing the nutrient categories such as Protein,
+												Carbohydrates, Fats,
+												Minerals, and Vitamins. Moving outward from the center, each subsequent
+												circle or
+												layer represents subcategories within those nutrient categories, such as
+												Animal
+												Protein, Plant Protein, Vegan Protein, Simple Carbs, Complex Carbs, and
+												so on.
+												Within each segment, the size of the arch reflects the average quantity
+												of that
+												nutrient present in the diet. For example, a larger arch for Protein
+												indicates a
+												higher average amount of protein consumed, while a smaller arch for Fats
+												suggests a
+												lower average intake of fats.
+												By examining the radial cluster as a whole, one can quickly grasp the
+												relative
+												proportions of different nutrient categories in the overall diet. For
+												instance, if
+												the outer circle representing Animal Protein has larger arches compared
+												to the
+												circle for Plant Protein, it indicates a higher average consumption of
+												animal-based
+												proteins in the diet.
+												This visualization provides an intuitive way to understand the balance
+												of nutrients
+												in one's diet at a glance. It allows for easy comparison between
+												different nutrient
+												categories and highlights areas where adjustments might be needed to
+												achieve a more
+												balanced and nutritious diet.
+											</li>
+										</ul>
+									</li>
+									<li>
+										<strong>Exploring Data:</strong>
+										<ul>
+											<li>Use both views to gain insights into the nutrient composition of the
+												diet.</li>
+											<li>Switch between the tree and radial cluster views to compare different
+												aspects of the data.</li>
+											<li>Interact with the graphs to explore specific nutrient categories, their
+												sources, and average quantities.</li>
+											<li>Clicking on nodes in the tree view or hovering over arches in the radial
+												cluster view provides more detailed information.</li>
+										</ul>
+									</li>
+									<li>
+										<strong>Analyzing Trends:</strong>
+										<ul>
+											<li>Notice how the graphs change based on the selected nutrient view.</li>
+											<li>Analyze trends such as which nutrient categories dominate the diet, the
+												sources of specific nutrients, and the average quantities consumed.</li>
+											<li>Use these insights to make informed decisions about dietary balance and
+												adjustments for a healthier lifestyle.</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</article>
+				</div>
+				<!-- Add the SVG graph here -->
+
+			</div>
+
+			<style>
+				/* label {
+					display: block;
+					margin-bottom: 10px;
+				} */
+
+				input[type="radio"] {
+					display: none;
+				}
+
+				label {
+					position: relative;
+					padding-left: 30px;
+					cursor: pointer;
+					font-size: 16px;
+					color: #333;
+				}
+
+				label:before {
+					content: "";
+					position: absolute;
+					left: 0;
+					top: 2px;
+					width: 20px;
+					height: 20px;
+					border: 2px solid #ccc;
+					border-radius: 50%;
+					background-color: #fff;
+				}
+
+				input[type="radio"]:checked+label:before {
+					background-color: #007bff;
+					border-color: #007bff;
+				}
+
+				label:after {
+					content: "";
+					position: absolute;
+					top: 6px;
+					left: 6px;
+					width: 8px;
+					height: 8px;
+					border-radius: 50%;
+					background-color: #fff;
+					display: none;
+				}
+
+				input[type="radio"]:checked+label:after {
+					display: block;
+				}
+
+				/* Highlight text of the selected button */
+				input[type="radio"]:checked+label {
+					color: #007bff;
+				}
+
+				.node circle {
+					fill: #fff;
+					stroke: steelblue;
+					stroke-width: 1.5px;
+				}
+
+				.node {
+					font: 10px sans-serif;
+				}
+
+				.link {
+					fill: none;
+					stroke: tan;
+					stroke-width: 1.5px;
+				}
+			</style>
+			<!-- Include D3.js library and script -->
+
+			<script>
+				// Your D3.js script for the SVG graph goes here
+				// Make sure to replace the placeholder SVG code with your actual graph code
+				var width = 1500;
+				var height = 1500;
+				var diameter = 300;
+				var duration = 2000;
+
+				d3.selectAll("input").on("change", change);
+
+				function change() {
+					if (this.value === "radialtree")
+						transitionToRadialTree();
+					else if (this.value === "radialcluster")
+						transitionToRadialCluster();
+					else if (this.value === "tree")
+						transitionToTree();
+					// else
+					//     transitionToCluster();
+				};
+
+
+				function transitionToRadialCluster() {
+
+					var nodes = radialCluster.nodes(root), // recalculate layout
+						links = radialCluster.links(nodes);
+
+
+					svg.transition().duration(duration)
+						.attr("transform", "translate(" + (width / 2.5) + "," +
+							(height / 2) + ")");
+					// set appropriate translation (origin in middle of svg)
+
+					link.data(links)
+						.transition()
+						.duration(duration)
+						.style("stroke", "#66c2a5")
+						.attr("d", radialDiagonal); //get the new radial path
+
+					node.data(nodes)
+						.transition()
+						.duration(duration)
+						.attr("transform", function (d) {
+							return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
+						});
+
+					node.select("circle")
+						.transition()
+						.duration(duration)
+						.style("fill", function (d) {
+							if (d.name === "Protein") {
+								// Change color for nodes that are direct children of root
+								return "red"; // Change this to the desired color
+							}
+							else if (d.name === "Carbs") {
+								return "blue";
+							}
+							else {
+								// Default color for other nodes
+								return "#4daf4a"; // Default color
+							}
+						});
+
+				};
+
+				function transitionToTree() {
+
+					var nodes = tree.nodes(root), //recalculate layout
+						links = tree.links(nodes);
+
+					svg.transition().duration(duration)
+						.attr("transform", "translate(40,0)");
+
+					link.data(links)
+						.transition()
+						.duration(duration)
+						.style("stroke", "#e78ac3")
+						.attr("d", diagonal); // get the new tree path
+
+					node.data(nodes)
+						.transition()
+						.duration(duration)
+						.attr("transform", function (d) {
+							return "translate(" + d.y + "," + d.x + ")";
+						});
+
+					node.select("circle")
+						.transition()
+						.duration(duration)
+						.style("stroke", "#377eb8");
+
+				};
+
+				var tree = d3.layout.tree()
+					.size([height, width - 160])
+					.separation(function (a, b) {
+						if (a.parent == b.parent) {
+							// If the nodes have the same parent, use the default separation
+							return 0.5;
+						} else {
+							// If the nodes have different parents, adjust the separation based on depth
+							if (a.depth === 0 || b.depth === 0) {
+								// If either node is the root (depth 0), use a smaller separation
+								return 1;
+							} else if (!a.children && !b.children) {
+								// If both nodes are leaf nodes, increase the separation
+								return 2 / a.depth;
+							} else {
+								// For other cases, use the default separation
+								return 1 / a.depth;
+							}
+						}
+					});
+
+
+				var cluster = d3.layout.cluster()
+					.size([height, width - 160]);
+
+				var diagonal = d3.svg.diagonal()
+					.projection(function (d) {
+						return [d.y, d.x];
+					});
+
+				var radialTree = d3.layout.tree()
+					.size([360, 1 * diameter])
+					.separation(function (a, b) {
+						return (a.parent == b.parent ? 1 : 2) / a.depth;
+					});
+
+				var radialCluster = d3.layout.cluster()
+					.size([360, 1.8 * diameter])
+					.separation(function (a, b) {
+						return (a.parent == b.parent ? 1 : 2) / a.depth;
+					});
+
+				var radialDiagonal = d3.svg.diagonal.radial()
+					.projection(function (d) {
+						return [d.y, d.x / 180 * Math.PI];
+					});
+
+
+				var svg = d3.select("#graph").append("svg")
+					.attr("width", width)
+					.attr("height", height)
+					.append("g")
+					.attr("transform", "translate(40,0)");
+
+				var root = getData(),
+					nodes = tree.nodes(root),
+					links = tree.links(nodes);
+
+				var link = svg.selectAll(".link")
+					.data(links)
+					.enter()
+					.append("path")
+					.attr("class", "link")
+					.style("stroke", "#8da0cb")
+					.attr("d", diagonal);
+
+				var node = svg.selectAll(".node")
+					.data(nodes)
+					.enter()
+					.append("g")
+					.attr("class", "node")
+					.attr("transform", function (d) {
+						return "translate(" + d.y + "," + d.x + ")";
+					})
+
+				node.append("circle")
+					.attr("r", 4.5)
+					.style("stroke", "#e41a1c");
+				node.append("text")
+					.attr("dx", function (d) { return d.children ? -15 : 10; }) // shift text to the left for children, right for parents
+					.attr("dy", 3) // vertical alignment
+					.style("text-anchor", function (d) { return d.children ? "end" : "start"; }) // anchor text at end for children, start for parents
+					.text(function (d) { return d.name; }); // display node name as text
+
+				function getData() {
+					return {
+						"name": "Food",
+						"children": [{
+							"name": "Protein",
+							"children": [{
+								"name": "Animal Protein",
+								"children": [{
+									"name": "Chicken",
+									"children": [
+										{
+											"name": "239 kcal/100gm"
+										},
+										{
+											"name": "31 gm/100gm"
+										}
+									],
+									"size": 3938
+								}, {
+									"name": "Salmon",
+									"children": [
+										{
+											"name": "208 kcal/100gm"
+										},
+										{
+											"name": "20 gm/100gm"
+										}
+									],
+									"size": 3812
+								}, {
+									"name": "Eggs",
+									"children": [
+										{
+											"name": "143 kcal/100gm"
+										},
+										{
+											"name": "14 gm/100gm"
+										}
+									],
+									"size": 6714
+								}, {
+									"name": "Beef",
+									"children": [
+										{
+											"name": "258 kcal/100gm"
+										},
+										{
+											"name": "26 gm/100gm"
+										}
+									],
+									"size": 743
+								}, {
+									"name": "Lamb",
+									"children": [
+										{
+											"name": "282 kcal/100gm"
+										},
+										{
+											"name": "26 gm/100gm"
+										}
+									],
+									"size": 743
+								}, {
+									"name": "Pork",
+									"children": [
+										{
+											"name": "242 kcal/100gm"
+										},
+										{
+											"name": "27 gm/100gm"
+										}
+									],
+									"size": 743
+								}]
+							}, {
+								"name": "Plant Protein",
+								"children": [{
+									"name": "Tempah",
+									"children": [
+										{
+											"name": "160 kcal/100gm"
+										},
+										{
+											"name": "16 gm/100gm"
+										}
+									],
+									"size": 3534
+								}, {
+									"name": "Lentils",
+									"children": [
+										{
+											"name": "230 kcal/100gm"
+										},
+										{
+											"name": "18 gm/100gm"
+										}
+									],
+									"size": 5731
+								}, {
+									"name": "Black Beans",
+									"children": [
+										{
+											"name": "132 kcal/100gm"
+										},
+										{
+											"name": "15 gm/100gm"
+										}
+									],
+									"size": 7840
+								}, {
+									"name": "Chickpeas",
+									"children": [
+										{
+											"name": "164 kcal/100gm"
+										},
+										{
+											"name": "19 gm/100gm"
+										}
+									],
+									"size": 5914
+								}, {
+									"name": "Paneer",
+									"children": [
+										{
+											"name": "365 kcal/100gm"
+										},
+										{
+											"name": "22 gm/100gm"
+										}
+									],
+									"size": 3416
+								}]
+							}, {
+								"name": "Vegan Protein",
+								"children": [{
+									"name": "Tofu",
+									"children": [
+										{
+											"name": "80 kcal/100gm"
+										},
+										{
+											"name": "12 gm/100gm"
+										}
+									],
+									"size": 7074
+								}, {
+									"name": "Peas",
+									"children": [
+										{
+											"name": "80 kcal/100gm"
+										},
+										{
+											"name": "8 gm/100gm"
+										}
+									],
+									"size": 7074
+								}, {
+									"name": "Hemp Seeds",
+									"children": [
+										{
+											"name": "546 kcal/100gm"
+										},
+										{
+											"name": "31 gm/100gm"
+										}
+									],
+									"size": 7074
+								}, {
+									"name": "Protein Powder",
+									"children": [
+										{
+											"name": "125 kcal/100gm"
+										},
+										{
+											"name": "25 gm/100gm"
+										}
+									],
+									"size": 7074
+								}]
+							}]
+						}, {
+							"name": "Carbs",
+							"children": [
+								{
+									"name": "Simple Carbs",
+									"children": [
+										{
+											"name": "Sugar",
+											"children": [
+												{
+													"name": "Table Sugar",
+													"children": [
+														{
+															"name": "387 kcal/100gm"
+														},
+														{
+															"name": "0 gm/100gm"
+														}
+													],
+													"size": 3938
+												},
+												{
+													"name": "Honey",
+													"children": [
+														{
+															"name": "304 kcal/100gm"
+														},
+														{
+															"name": "0 gm/100gm"
+														}
+													],
+													"size": 3812
+												},
+												{
+													"name": "Maple Syrup",
+													"children": [
+														{
+															"name": "260 kcal/100gm"
+														},
+														{
+															"name": "0.1 gm/100gm"
+														}
+													],
+													"size": 6714
+												}
+											]
+										},
+										{
+											"name": "Fruit",
+											"children": [
+												{
+													"name": "Apple",
+													"children": [
+														{
+															"name": "52 kcal/100gm"
+														},
+														{
+															"name": "14 gm/100gm"
+														}
+													],
+													"size": 743
+												},
+												{
+													"name": "Banana",
+													"children": [
+														{
+															"name": "89 kcal/100gm"
+														},
+														{
+															"name": "23 gm/100gm"
+														}
+													],
+													"size": 743
+												},
+												{
+													"name": "Orange",
+													"children": [
+														{
+															"name": "47 kcal/100gm"
+														},
+														{
+															"name": "11 gm/100gm"
+														}
+													],
+													"size": 743
+												}
+											]
+										},
+									]
+								},
+								{
+									"name": "Complex",
+									"children": [
+										{
+											"name": "Whole Grains",
+											"children": [
+												{
+													"name": "Brown Rice",
+													"children": [
+														{
+															"name": "111 kcal/100gm"
+														},
+														{
+															"name": "2.6 gm/100gm"
+														}
+													],
+													"size": 3534
+												},
+												{
+													"name": "Roti",
+													"children": [
+														{
+															"name": "Whole Wheat Roti",
+															"children": [
+																{
+																	"name": "297 kcal/100gm"
+																},
+																{
+																	"name": "45 gm/100gm"
+																}
+															],
+															"size": 743
+														},
+														{
+															"name": "White Flour Roti",
+															"children": [
+																{
+																	"name": "299 kcal/100gm"
+																},
+																{
+																	"name": "58 gm/100gm"
+																}
+															],
+															"size": 743
+														}
+													]
+												},
+												{
+													"name": "Quinoa",
+													"children": [
+														{
+															"name": "120 kcal/100gm"
+														},
+														{
+															"name": "4.4 gm/100gm"
+														}
+													],
+													"size": 5731
+												},
+												{
+													"name": "Oats",
+													"children": [
+														{
+															"name": "389 kcal/100gm"
+														},
+														{
+															"name": "17 gm/100gm"
+														}
+													],
+													"size": 7840
+												}
+											]
+										},
+										{
+											"name": "Vegetables",
+											"children": [
+												{
+													"name": "Sweet Potato",
+													"children": [
+														{
+															"name": "86 kcal/100gm"
+														},
+														{
+															"name": "2 gm/100gm"
+														}
+													],
+													"size": 5914
+												},
+												{
+													"name": "Broccoli",
+													"children": [
+														{
+															"name": "34 kcal/100gm"
+														},
+														{
+															"name": "2.8 gm/100gm"
+														}
+													],
+													"size": 3416
+												},
+												{
+													"name": "Spinach",
+													"children": [
+														{
+															"name": "23 kcal/100gm"
+														},
+														{
+															"name": "2.9 gm/100gm"
+														}
+													],
+													"size": 3416
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Unhealthy Carbs",
+									"children": [
+										{
+											"name": "Fast Food",
+											"children": [
+												{
+													"name": "Pizza",
+													"children": [
+														{
+															"name": "266 kcal/100gm"
+														},
+														{
+															"name": "55 gm/100gm"
+														}
+													],
+													"size": 743
+												},
+												{
+													"name": "Burger",
+													"children": [
+														{
+															"name": "250 kcal/100gm"
+														},
+														{
+															"name": "45 gm/100gm"
+														}
+													],
+													"size": 743
+												},
+												{
+													"name": "Hot Dogs",
+													"children": [
+														{
+															"name": "287 kcal/100gm"
+														},
+														{
+															"name": "32 gm/100gm"
+														}
+													],
+													"size": 743
+												},
+												{
+													"name": "Chips",
+													"children": [
+														{
+															"name": "536 kcal/100gm"
+														},
+														{
+															"name": "58 gm/100gm"
+														}
+													],
+													"size": 743
+												},
+											],
+											"size": 743
+										},
+										{
+											"name": "Ice Cream",
+											"children": [
+												{
+													"name": "207 kcal/100gm"
+												},
+												{
+													"name": "21 gm/100gm"
+												}
+											],
+											"size": 743
+										},
+										{
+											"name": "Donuts",
+											"children": [
+												{
+													"name": "452 kcal/100gm"
+												},
+												{
+													"name": "48 gm/100gm"
+												}
+											],
+											"size": 743
+										}
+									]
+								}
+							]
+						}, {
+							"name": "Fats",
+							"children": [
+								{
+									"name": "Saturated Fats",
+									"children": [
+										{
+											"name": "Butter",
+											"children": [
+												{
+													"name": "717 kcal/100gm"
+												},
+												{
+													"name": "51 gm/100gm"
+												}
+											],
+											"size": 3938
+										},
+										{
+											"name": "Cheese",
+											"children": [
+												{
+													"name": "402 kcal/100gm"
+												},
+												{
+													"name": "25 gm/100gm"
+												}
+											],
+											"size": 3812
+										},
+										{
+											"name": "Red Meat",
+											"children": [
+												{
+													"name": "250 kcal/100gm"
+												},
+												{
+													"name": "25 gm/100gm"
+												}
+											],
+											"size": 6714
+										},
+										{
+											"name": "Palm Oil",
+											"children": [
+												{
+													"name": "884 kcal/100gm"
+												},
+												{
+													"name": "100 gm/100gm"
+												}
+											],
+											"size": 743
+										}
+									]
+								},
+								{
+									"name": "Unsaturated Fats",
+									"children": [
+										{
+											"name": "Margarine",
+											"children": [
+												{
+													"name": "717 kcal/100gm"
+												},
+												{
+													"name": "51 gm/100gm"
+												}
+											],
+											"size": 3938
+										},
+										{
+											"name": "Fried Foods",
+											"children": [
+												{
+													"name": "536 kcal/100gm"
+												},
+												{
+													"name": "58 gm/100gm"
+												}
+											],
+											"size": 3812
+										},
+										{
+											"name": "Fast Foods",
+											"children": [
+												{
+													"name": "644 kcal/100gm"
+												},
+												{
+													"name": "33 gm/100gm"
+												}
+											],
+											"size": 6714
+										},
+										{
+											"name": "Snacks",
+											"children": [
+												{
+													"name": "560 kcal/100gm"
+												},
+												{
+													"name": "30 gm/100gm"
+												}
+											],
+											"size": 6714
+										}
+									]
+								},
+								{
+									"name": "Healthy Fats",
+									"children": [
+										{
+											"name": "Avocado",
+											"children": [
+												{
+													"name": "160 kcal/100gm"
+												},
+												{
+													"name": "15 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Olive Oil",
+											"children": [
+												{
+													"name": "884 kcal/100gm"
+												},
+												{
+													"name": "100 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Walnuts",
+											"children": [
+												{
+													"name": "654 kcal/100gm"
+												},
+												{
+													"name": "65 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Almonds",
+											"children": [
+												{
+													"name": "579 kcal/100gm"
+												},
+												{
+													"name": "49 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Egg Yolk",
+											"children": [
+												{
+													"name": "322 kcal/100gm"
+												},
+												{
+													"name": "27 gm/100gm"
+												}
+											]
+										},
+									]
+								}
+							]
+						}, {
+							"name": "Vitamins",
+							"children": [
+								{
+									"name": "Vitamin A",
+									"children": [
+										{
+											"name": "Carrots",
+											"children": [
+												{
+													"name": "41 kcal/100gm"
+												},
+												{
+													"name": "0.24 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Sweet Potatoes",
+											"children": [
+												{
+													"name": "86 kcal/100gm"
+												},
+												{
+													"name": "0.1 gm/100gm"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Vitamin B",
+									"children": [
+										{
+											"name": "B1 (Thiamine)",
+											"children": [
+												{
+													"name": "Pork",
+													"children": [
+														{
+															"name": "242 kcal/100gm"
+														},
+														{
+															"name": "0 gm/100gm"
+														}
+													]
+												},
+												{
+													"name": "Sunflower Seeds",
+													"children": [
+														{
+															"name": "584 kcal/100gm"
+														},
+														{
+															"name": "20 gm/100gm"
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "B2 (Riboflavin)",
+											"children": [
+												{
+													"name": "Almonds",
+													"children": [
+														{
+															"name": "576 kcal/100gm"
+														},
+														{
+															"name": "21 gm/100gm"
+														}
+													]
+												},
+												{
+													"name": "Eggs",
+													"children": [
+														{
+															"name": "143 kcal/100gm"
+														},
+														{
+															"name": "12.6 gm/100gm"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Vitamin C",
+									"children": [
+										{
+											"name": "Oranges",
+											"children": [
+												{
+													"name": "47 kcal/100gm"
+												},
+												{
+													"name": "9.5 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Strawberries",
+											"children": [
+												{
+													"name": "32 kcal/100gm"
+												},
+												{
+													"name": "7.7 gm/100gm"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Vitamin D",
+									"children": [
+										{
+											"name": "Salmon",
+											"children": [
+												{
+													"name": "208 kcal/100gm"
+												},
+												{
+													"name": "20 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Mushrooms",
+											"children": [
+												{
+													"name": "22 kcal/100gm"
+												},
+												{
+													"name": "3.1 gm/100gm"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Vitamin E",
+									"children": [
+										{
+											"name": "Sunflower Oil",
+											"children": [
+												{
+													"name": "884 kcal/100gm"
+												},
+												{
+													"name": "100 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Almonds",
+											"children": [
+												{
+													"name": "576 kcal/100gm"
+												},
+												{
+													"name": "21 gm/100gm"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Vitamin K",
+									"children": [
+										{
+											"name": "Kale",
+											"children": [
+												{
+													"name": "35 kcal/100gm"
+												},
+												{
+													"name": "4.1 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Spinach",
+											"children": [
+												{
+													"name": "23 kcal/100gm"
+												},
+												{
+													"name": "2.9 gm/100gm"
+												}
+											]
+										}
+									]
+								}
+							]
+						}, {
+							"name": "Minerals",
+							"children": [
+								{
+									"name": "Iron",
+									"children": [
+										{
+											"name": "Spinach",
+											"children": [
+												{
+													"name": "23 kcal/100gm"
+												},
+												{
+													"name": "2.9 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Red Meat",
+											"children": [
+												{
+													"name": "217 kcal/100gm"
+												},
+												{
+													"name": "20 gm/100gm"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Calcium",
+									"children": [
+										{
+											"name": "Milk",
+											"children": [
+												{
+													"name": "42 kcal/100gm"
+												},
+												{
+													"name": "4 gm/100gm"
+												}
+											]
+										},
+										{
+											"name": "Yogurt",
+											"children": [
+												{
+													"name": "59 kcal/100gm"
+												},
+												{
+													"name": "5 gm/100gm"
+												}
+											]
+										}
+									]
+								}
+							]
+						}]
+					};
+				}
+			</script>
+		</div>
+
+	</div>
+</body>
+
+</html>

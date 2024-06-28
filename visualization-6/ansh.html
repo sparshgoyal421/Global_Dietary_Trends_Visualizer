@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    text {
+      font-size: 16px;
+      font-family: Open Sans, sans-serif;
+    }
+    text.title {
+      font-size: 24px;
+      font-weight: 500;
+    }
+    text.subTitle {
+      font-weight: 500;
+      fill: #777777;
+    }
+
+    text.label {
+      font-weight: 600;
+    }
+
+    text.LifeLabel {
+      font-weight: 300;
+    }
+
+    text.yearText {
+      font-size: 64px;
+      font-weight: 700;
+      opacity: 0.25;
+    }
+    .tick text {
+      fill: #777777;
+    }
+    .xAxis .tick:nth-child(2) text {
+      text-anchor: start;
+    }
+    .tick line {
+      shape-rendering: CrispEdges;
+      stroke: #dddddd;
+    }
+    .tick line.origin {
+      stroke: #aaaaaa;
+    }
+    path.domain {
+      display: none;
+    }
+
+    #pauseResumeBtn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+    }
+    .dropdown {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .dropdown:hover {
+      border-color: #999;
+    }
+
+    .dropdown:focus {
+      border-color: #007bff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    label {
+      margin-right: 8px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .wrapper {
+      width: 400px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 25px 40px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+    header h2 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .price-input {
+      width: 100%;
+      display: flex;
+      margin: 30px 0 35px;
+    }
+    .price-input .field {
+      display: flex;
+      width: 100%;
+      height: 45px;
+      align-items: center;
+    }
+    .field input {
+      width: 100%;
+      height: 100%;
+      outline: none;
+      font-size: 19px;
+      margin-left: 12px;
+      border-radius: 5px;
+      text-align: center;
+      border: 1px solid #999;
+      -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    .price-input .seperator {
+      width: 130px;
+      display: flex;
+      font-size: 19px;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider {
+      height: 5px;
+      position: relative;
+      background: #ddd;
+      border-radius: 5px;
+    }
+    .slider .progress {
+      height: 100%;
+      left: 0%;
+      right: 0%;
+      position: absolute;
+      border-radius: 5px;
+      background: #000;
+    }
+    .range-input {
+      position: relative;
+    }
+    .range-input input {
+      position: absolute;
+      width: 100%;
+      height: 5px;
+      top: -5px;
+      background: none;
+      pointer-events: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      height: 17px;
+      width: 17px;
+      border-radius: 50%;
+      background: #000;
+      pointer-events: auto;
+      -webkit-appearance: none;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+    input[type="range"]::-moz-range-thumb {
+      height: 17px;
+      width: 17px;
+      border: none;
+      border-radius: 50%;
+      background: #000;
+      pointer-events: auto;
+      -moz-appearance: none;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+
+<body>
+  <button id="pauseResumeBtn">Pause</button><br /><br /><br />
+  <div>
+    <label for="continentSelect">Select Continent:</label>
+    <select id="continentSelect" class="dropdown">
+      <option value="All">All</option>
+      <option value="Africa">Africa</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+      <option value="North America">North America</option>
+      <option value="Oceania">Oceania</option>
+      <option value="South America">South America</option>
+    </select>
+  </div>
+  <div class="wrapper">
+    <header>
+      <h2>Price Range</h2>
+    </header>
+    <div class="price-input">
+      <div class="field">
+        <span>Min</span>
+        <input type="number" class="input-min" value="1950" />
+      </div>
+      <div class="seperator">-</div>
+      <div class="field">
+        <span>Max</span>
+        <input type="number" class="input-max" value="2021" />
+      </div>
+    </div>
+    <div class="slider">
+      <div class="progress"></div>
+    </div>
+    <div class="range-input">
+      <input
+        type="range"
+        class="range-min"
+        min="1950"
+        max="2021"
+        value="1950"
+        step="1"
+      />
+      <input
+        type="range"
+        class="range-max"
+        min="1950"
+        max="2021"
+        value="2021"
+        step="1"
+      />
+    </div>
+    <br />
+    <button id="play-button">Play</button>
+  </div>
+  <script>
+    const playButton = document.getElementById("play-button");
+    var rangeInput = document.querySelectorAll(".range-input input"),
+      priceInput = document.querySelectorAll(".price-input input"),
+      range = document.querySelector(".slider .progress");
+
+    let priceGap = 1;
+
+    priceInput.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        var minPrice = parseInt(priceInput[0].value),
+          maxPrice = parseInt(priceInput[1].value);
+
+        if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+          if (e.target.className === "input-min") {
+            rangeInput[0].value = minPrice;
+            range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+          } else {
+            rangeInput[1].value = maxPrice;
+            range.style.right =
+              100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+          }
+        }
+      });
+    });
+
+    rangeInput.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        var minVal = parseInt(rangeInput[0].value),
+          maxVal = parseInt(rangeInput[1].value);
+
+        if (maxVal - minVal < priceGap) {
+          if (e.target.className === "range-min") {
+            rangeInput[0].value = maxVal - priceGap;
+          } else {
+            rangeInput[1].value = minVal + priceGap;
+          }
+        } else {
+          priceInput[0].value = minVal;
+          priceInput[1].value = maxVal;
+          range.style.left =
+            ((minVal - rangeInput[0].min) /
+              (rangeInput[0].max - rangeInput[0].min)) *
+              100 +
+            "%";
+          range.style.right =
+            100 -
+            ((maxVal - rangeInput[1].min) /
+              (rangeInput[1].max - rangeInput[1].min)) *
+              100 +
+            "%";
+        }
+      });
+    });
+
+    // Feel free to change or delete any of the code you see in this editor!
+    var svg = d3
+      .select("body")
+      .append("svg")
+      .attr("width", 1160)
+      .attr("height", 600);
+
+    var tickDuration = 500;
+
+    var top_n = 12;
+    var height = 600;
+    var width = 1060;
+
+    const margin = {
+      top: 80,
+      right: 30,
+      bottom: 5,
+      left: 0,
+    };
+
+    let barPadding = (height - (margin.bottom + margin.top)) / (top_n * 5);
+
+    let title = svg
+      .append("text")
+      .attr("class", "title")
+      .attr("y", 24)
+      .html("72 years of Life Expectancy globally");
+
+    let subTitle = svg
+      .append("text")
+      .attr("class", "subTitle")
+      .attr("y", 55)
+      .html("Period of life expectancy (in years)");
+
+    var year = 1950;
+    var ticker;
+    var isAnimationPaused = false;
+
+    d3.csv("to_be_used.csv").then(function (data) {
+      //if (error) throw error;
+
+      data.forEach((d) => {
+        (d["Period life expectancy"] = (+d["Period life expectancy"]).toFixed(
+          2
+        )),
+          //  d["Period life expectancy"] = isNaN(d["Period life expectancy"]) ? 0 : d["Period life expectancy"],
+          (d.year = +d.Year),
+          (d.name = d.Country),
+          (d.colour = d3.hsl(Math.random() * 360, 0.75, 0.75));
+      });
+
+      // Add event listener for continent selection change
+      const continentSelect = document.getElementById("continentSelect");
+      continentSelect.addEventListener("change", handleContinentChange);
+      playButton.addEventListener("click", handleplay);
+
+      function handleplay() {
+        if (ticker) ticker.stop();
+        isAnimationPaused = false;
+        pauseResumeBtn.innerHTML = isAnimationPaused ? "Resume" : "Pause";
+
+        year = rangeInput[0].value;
+        endYear = rangeInput[1].value+1;
+        console.log(startYear, endYear);
+        updateAnimation(data);
+      }
+      function handleContinentChange() {
+        const selectedContinent = continentSelect.value;
+        // Stop the ongoing animation if ticker exists
+        if (ticker) {
+          ticker.stop();
+          if (year != 1950) year--;
+        }
+
+        // Filter data based on the selected continent
+        let filteredData = data;
+        if (selectedContinent !== "All") {
+          filteredData = data.filter((d) => d.Continent === selectedContinent);
+        }
+
+        // Start new animation with filtered data
+        updateAnimation(filteredData);
+      }
+
+      var startYear = 1950;
+      var endYear = 2021;
+
+      year = startYear;
+
+      var yearSlice = data
+        .filter((d) => d.year == year && !isNaN(d["Period life expectancy"]))
+        .sort(
+          (a, b) => b["Period life expectancy"] - a["Period life expectancy"]
+        )
+        .slice(0, top_n);
+
+      yearSlice.forEach((d, i) => (d.rank = i));
+
+      console.log("yearSlice: ", yearSlice);
+
+      var x = d3
+        .scaleLinear()
+        .domain([0, d3.max(yearSlice, (d) => d["Period life expectancy"])])
+        .range([margin.left, width - margin.right - 65]);
+
+      var y = d3
+        .scaleLinear()
+        .domain([top_n, 0])
+        .range([height - margin.bottom, margin.top]);
+
+      svg
+        .selectAll("rect.bar")
+        .data(yearSlice, (d) => d.name)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", x(0) + 1)
+        .attr("width", (d) => x(d["Period life expectancy"]) - x(0) - 1)
+        .attr("y", (d) => y(d.rank) + 5)
+        .attr("height", y(1) - y(0) - barPadding)
+        .style("fill", (d) => d.colour);
+
+      svg
+        .selectAll("text.label")
+        .data(yearSlice, (d) => d.name)
+        .enter()
+        .append("text")
+        .attr("class", "label")
+        .attr("x", (d) => x(d["Period life expectancy"]) - 8)
+        .attr("y", (d) => y(d.rank) + 5 + (y(1) - y(0)) / 2 + 1)
+        .style("text-anchor", "end")
+        .html((d) => d.name);
+
+      svg
+        .selectAll("text.LifeLabel")
+        .data(yearSlice, (d) => d.name)
+        .enter()
+        .append("text")
+        .attr("class", "LifeLabel")
+        .attr("x", (d) => x(d["Period life expectancy"]) + 5)
+        .attr("y", (d) => y(d.rank) + 5 + (y(1) - y(0)) / 2 + 1)
+        .text((d) => d["Period life expectancy"]);
+
+      var yearText = svg
+        .append("text")
+        .attr("class", "yearText")
+        .attr("x", width + margin.right * 3)
+        .attr("y", height - 25)
+        .style("text-anchor", "end")
+        .html(~~year)
+        .call(halo, 10);
+
+      var xAxis = d3
+        .axisTop()
+        .scale(x)
+        .ticks(width > 500 ? 5 : 2)
+        .tickSize(-(height - margin.top - margin.bottom))
+        .tickFormat((d) => d3.format(",")(d));
+
+      svg
+        .append("g")
+        .attr("class", "axis xAxis")
+        .attr("transform", `translate(0, ${margin.top})`)
+        .call(xAxis)
+        .selectAll(".tick line")
+        .classed("origin", (d) => d == 0);
+
+      function updateAnimation(data) {
+        ticker = d3.interval((e) => {
+          if (!isAnimationPaused) {
+            yearSlice = data
+              .filter(
+                (d) => d.year == year && !isNaN(d["Period life expectancy"])
+              )
+              .sort(
+                (a, b) =>
+                  b["Period life expectancy"] - a["Period life expectancy"]
+              )
+              .slice(0, top_n);
+
+            yearSlice.forEach((d, i) => (d.rank = i));
+
+            //console.log('IntervalYear: ', yearSlice);
+
+            x.domain([
+              0,
+              d3.max(yearSlice, (d) => d["Period life expectancy"]),
+            ]);
+
+            svg
+              .select(".xAxis")
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .call(xAxis);
+
+            let bars = svg.selectAll(".bar").data(yearSlice, (d) => d.name);
+
+            bars
+              .enter()
+              .append("rect")
+              .attr("class", (d) => `bar ${d.name}`)
+              .attr("x", x(0) + 1)
+              .attr("width", (d) => x(d["Period life expectancy"]) - x(0) - 1)
+              .attr("y", (d) => y(top_n + 1) + 5)
+              .attr("height", y(1) - y(0) - barPadding)
+              .style("fill", (d) => d.colour)
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("y", (d) => y(d.rank) + 5);
+
+            bars
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("width", (d) => x(d["Period life expectancy"]) - x(0) - 1)
+              .attr("y", (d) => y(d.rank) + 5);
+
+            bars
+              .exit()
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("width", (d) => x(d["Period life expectancy"]) - x(0) - 1)
+              .attr("y", (d) => y(top_n + 1) + 5)
+              .remove();
+
+            let labels = svg.selectAll(".label").data(yearSlice, (d) => d.name);
+
+            labels
+              .enter()
+              .append("text")
+              .attr("class", "label")
+              .attr("x", (d) => x(d["Period life expectancy"]) - 8)
+              .attr("y", (d) => y(top_n + 1) + 5 + (y(1) - y(0)) / 2)
+              .style("text-anchor", "end")
+              .html((d) => d.name)
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("y", (d) => y(d.rank) + 5 + (y(1) - y(0)) / 2 + 1);
+
+            labels
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("x", (d) => x(d["Period life expectancy"]) - 8)
+              .attr("y", (d) => y(d.rank) + 5 + (y(1) - y(0)) / 2 + 1);
+
+            labels
+              .exit()
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("x", (d) => x(d["Period life expectancy"]) - 8)
+              .attr("y", (d) => y(top_n + 1) + 5)
+              .remove();
+
+            let LifeLabels = svg
+              .selectAll(".LifeLabel")
+              .data(yearSlice, (d) => d.name);
+
+            LifeLabels.enter()
+              .append("text")
+              .attr("class", "LifeLabel")
+              .attr("x", (d) => x(d["Period life expectancy"]) + 5)
+              .attr("y", (d) => y(top_n + 1) + 5)
+              .text((d) => d["Period life expectancy"])
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("y", (d) => y(d.rank) + 5 + (y(1) - y(0)) / 2 + 1);
+
+            LifeLabels.transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("x", (d) => x(d["Period life expectancy"]) + 5)
+              .attr("y", (d) => y(d.rank) + 5 + (y(1) - y(0)) / 2 + 1)
+              .tween("text", function (d) {
+                let i = d3.interpolate(
+                  d["Period life expectancy"],
+                  d["Period life expectancy"]
+                );
+                return function (t) {
+                  this.textContent = i(t);
+                };
+              });
+
+            LifeLabels.exit()
+              .transition()
+              .duration(tickDuration)
+              .ease(d3.easeLinear)
+              .attr("x", (d) => x(d["Period life expectancy"]) + 5)
+              .attr("y", (d) => y(top_n + 1) + 5)
+              .remove();
+
+            yearText.html(~~year);
+            year = d3.format(".1f")(+year + 1);
+          }
+          if (year > endYear) {
+            ticker.stop();
+            pauseResumeBtn.innerHTML = "Resume";
+          }
+        }, tickDuration);
+      }
+      // Add event listener for the pause/resume button
+      const pauseResumeBtn = document.getElementById("pauseResumeBtn");
+      pauseResumeBtn.addEventListener("click", () => {
+        isAnimationPaused = !isAnimationPaused;
+        pauseResumeBtn.innerHTML = isAnimationPaused ? "Resume" : "Pause";
+        // handleplay();
+      });
+
+      if (isAnimationPaused) {
+        // Add event listeners for the inputs
+        startYearInput.addEventListener("input", () => {});
+        endYearInput.addEventListener("input", () => {});
+        console.log("w");
+        if (!isAnimationPaused) updateAnimation();
+      }
+
+      // Initial animation
+    //   updateAnimation(data);
+    });
+
+    const halo = function (text, strokeWidth) {
+      text
+        .select(function () {
+          return this.parentNode.insertBefore(this.cloneNode(true), this);
+        })
+        .style("fill", "#ffffff")
+        .style("stroke", "#ffffff")
+        .style("stroke-width", strokeWidth)
+        .style("stroke-linejoin", "round")
+        .style("opacity", 1);
+    };
+  </script>
+</body>

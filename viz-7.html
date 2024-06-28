@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Visualization 7</title>
+    <meta name="description" content="Free Responsive Html5 Css3 Templates | zerotheme.com" />
+    <meta name="author" content="www.zerotheme.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="css/zerogrid.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/menu.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/animate.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="owl-carousel/owl.carousel.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style type="text/css">
+      .tooltip {
+        position: absolute;
+        /* padding: 5px; */
+        font-size: 21px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        font-weight: bold;
+        border-radius: 15px;
+        opacity: 0; /* Initially hidden */
+        font-family: Arial, Helvetica, sans-serif;
+        pointer-events: none; /* Disable pointer events */
+        user-select: none; /* Disable text selection */
+      }
+      .chart-container {
+        display: flex;
+        top: 10px;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        position: relative;
+        background-image: url("./world.avif");
+        background-size: contain; /* Adjust the background size property */
+        background-position: center;
+        background-repeat: no-repeat; /* Prevent image from repeating */
+        height: 100vh; /* Adjust the height to fit the viewport */
+      }
+
+      .continent-container {
+        width: 30%;
+        height: 400px; /* Adjust the height as needed */
+        margin-bottom: 20px;
+      }
+
+      .bubble-container {
+        position: absolute;
+      }
+
+      #asia-container .bubble-container {
+        top: 20%;
+        left: 60%;
+      }
+
+      #north-america-container .bubble-container {
+        top: 18%;
+        left: 8%;
+      }
+
+      #south-america-container .bubble-container {
+        top: 50%;
+        left: 19%;
+      }
+
+      #africa-container .bubble-container {
+        top: 43%;
+        left: 45%;
+      }
+
+      #oceania-container .bubble-container {
+        top: 50%;
+        left: 70%;
+      }
+
+      #europe-container .bubble-container {
+        top: 14%;
+        left: 44%;
+      }
+
+      #sliderContainer {
+        /* display: flex; */
+        align-items: center;  
+        justify-content: space-between;
+        position: relative;
+        margin-top: 20px; /* Add some space above the slider */
+        width: 80%;
+        left: 20%;
+      }
+
+      /* Slider styles */
+      #range {
+        width: 70%;
+        height: 10px; /* Increase the height for a thicker slider */
+        margin: 0 10px;
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 10px; /* Add rounded corners */
+        background: #d3d3d3; /* Change the background color */
+        outline: none;
+      }
+
+      /* Thumb styles */
+      #range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px; /* Increase the width for a larger thumb */
+        height: 25px; /* Increase the height for a larger thumb */
+        border-radius: 50%;
+        background: #4caf50; /* Set thumb color */
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow */
+      }
+
+      #range::-moz-range-thumb {
+        width: 25px; /* Increase the width for a larger thumb */
+        height: 25px; /* Increase the height for a larger thumb */
+        border-radius: 50%;
+        background: #4caf50; /* Set thumb color */
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow */
+      }
+
+      /* Value labels styles */
+      .min-value {
+        left: 50px;
+        font-size: 40px; /* Increase font size */
+        color: #333; /* Change text color */
+      }
+
+      .max-value {
+        font-size: 40px; /* Increase font size */
+        color: #333; /* Change text color */
+      }
+
+      #currentValue {
+        font-size: 30px; /* Increase font size for current value */
+        color: #4caf50; /* Change color for current value */
+        position: absolute;
+        font-weight: bold;
+        top: calc(30px - 2em);
+        left: calc(36%);
+      }
+
+      .country-and-year {
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #cccccc;
+        min-width: 250px;
+      }
+
+      .country-and-year b {
+        font-size: 100;
+      }
+
+      .country {
+        font-size: 35px;
+      }
+
+      .year {
+        font-size: 20px;
+      }
+    </style>
+
+  </head>
+  <body id="page-top" class="sub-page">
+    <div class="wrap-body">
+      <header>
+        <div class="wrap-header">
+          <div class="main-header" style="background-image: url(./images/dark-world-decorative-image.png)">
+            <div class="bg-overlay">
+              <div class="hero-content-wrapper">
+                <div class="hero-content">
+                  <h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">Modified Bubble Chart</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+		</div>
+		</header>
+		<div id="cssmenu" >
+		  <ul style="display: flex;justify-content: center">
+			<li class="active">
+			  <a href="index.html#chart-7"><span>Back</span></a>
+			</li>
+			<li>
+			  <a href="#chart-top"><span>Visualization</span></a>
+			</li>
+			<li>
+			  <a href="#interactions"><span>Interaction</span></a>
+			</li>
+		  </ul>
+		</div>
+
+      <!--////////////////////////////////////Container-->
+      <section id="page-content" >
+        <div class="wrap-container zerogrid" id="chart-top">
+          <div id="about-us">
+            <article class="post-entry single-post">
+              <div class="wrap-post">
+                <div class="entry-header">
+                  <h1 class="entry-title">% of Population who is Overweight, by Continents</h1>
+                </div>
+                <div class="sparsh-1">
+                  <div id="sliderContainer">
+                    <span class="min-value">0</span>
+                    <input
+                      type="range"
+                      id="range"
+                      name="range"
+                      min="0"
+                      max="100"
+                      value="50"
+                      step="1"
+                    />
+                    <span class="max-value">100</span>
+                    <span id="currentValue">50</span>
+                  </div>
+            
+                  <div class="chart-container">
+                    <div class="continent-container" id="europe-container"></div>
+                    <div class="continent-container" id="north-america-container"></div>
+                    <div id="legend-container"></div>
+                    <div class="continent-container" id="south-america-container"></div>
+                    <div class="continent-container" id="africa-container"></div>
+                    <div class="continent-container" id="asia-container"></div>
+                    <div class="continent-container" id="oceania-container"></div>
+                  </div>
+                </div>
+            
+                <script type="text/javascript">
+                  // Function to create bubble chart for a given continent
+                  
+                  document.getElementById("range").addEventListener(
+                    "input",
+                    debounce(function (event) {
+                      var selectedValue = event.target.value;
+        var range = event.target;
+        var rangeRect = range.getBoundingClientRect();
+        var rangeWidth = rangeRect.width;
+        var rangeLeft = rangeRect.left;
+        var currentValue = document.getElementById("currentValue");
+        var currentValueWidth = currentValue.offsetWidth;
+        var newPosition = (selectedValue / 100) * rangeWidth - (currentValueWidth / 2);
+        currentValue.style.left = newPosition + rangeLeft -500 + "px";
+        currentValue.textContent = selectedValue;
+                      // ... (rest of the code)
+                    }, 10)
+                  );
+                  function createBubbleChart(
+                    continentData,
+                    color,
+                    minValue,
+                    continentName
+                  ) {
+                    var diameter = 600;
+            
+                    var bubble = d3.pack().size([diameter, diameter]).padding(0); // Initially set padding to 0
+            
+                    var svg = d3
+                      .select(`#${continentName.toLowerCase().replace(" ", "-")}-container`)
+                      .append("svg")
+                      .attr("width", diameter)
+                      .attr("height", diameter)
+                      .attr("class", "bubble-container")
+                      .attr("z-index", 100);
+            
+                    var nodes = d3.hierarchy({ children: continentData }).sum(function (d) {
+                      return d["Overweight Value"];
+                    });
+            
+                    var packed = bubble(nodes);
+                    var padding = calculatePadding(packed.leaves().length, diameter);
+            
+                    // Re-create bubble pack layout with adjusted padding
+                    bubble.padding(padding);
+                    packed = bubble(nodes);
+            
+                    var node = svg
+                      .selectAll(".node")
+                      .data(packed.descendants())
+                      .enter()
+                      .filter(function (d) {
+                        return !d.children && d.data["Overweight Value"] >= minValue;
+                      })
+                      .append("g")
+                      .attr("class", "node")
+                      .attr("transform", function (d) {
+                        if (continentData[0]["Overweight Value"] == 73.4) {
+                          return "translate(" + d.x * 0.55 + "," + d.y * 0.55 + ")";
+                        } else if (continentData[0]["Overweight Value"] == 67.9) {
+                          return "translate(" + d.x * 0.5 + "," + d.y * 0.5 + ")";
+                        } else if (continentData[0]["Overweight Value"] == 63.4) {
+                          return "translate(" + d.x * 0.45 + "," + d.y * 0.45 + ")";
+                        } else if (continentData[0]["Overweight Value"] == 66.8) {
+                          return "translate(" + d.x * 0.4 + "," + d.y * 0.4 + ")";
+                        } else if (continentData[0]["Overweight Value"] == 66.4) {
+                          return "translate(" + d.x * 0.5 + "," + d.y * 0.5 + ")";
+                        }
+                        return "translate(" + d.x * 0.65 + "," + d.y * 0.65 + ")";
+                      });
+            
+            
+                    var tooltip = d3.select(".sparsh-1").append("div").attr("class", "tooltip");
+                    node
+                      .append("circle")
+                      .attr("r", function (d) {
+                        return (d.data["Overweight Value"]) * 0.45;
+                      })
+                      .style("fill", function (d) {
+                        // Calculate color based on the value using interpolation
+                        var interpolator = d3.interpolate("white", color); // Start from white and interpolate to color
+                        return interpolator(d.data["Overweight Value"] / 50); // Interpolate based on the value
+                      })
+                      .style("stroke", "black") // Add a black stroke to the bubble
+                      .style("stroke-width", 0.1) // Set the stroke width
+                      .style("opacity", 1) // Set initial opacity
+                      .on("mouseover", function (event, d) {
+                        // Change the outline and decrease opacity on mouseover
+                        d3.select(this)
+                          .style("stroke-width", 4) // Increase stroke width for outline
+                          .style("opacity", 0.7); // Decrease opacity
+                        tooltip
+                          .style("opacity", 1) // Show the tooltip
+                          .html(
+                            `<div class="country-and-year"><span class="country" style="color: ${color}"><b>${d.data.Country}</b><br></span><span class="year"> has <b style="color:black">${d.data["Overweight Value"]}</b> percent of its population as overweight</span></div>`
+                          )
+                          .style("left", event.pageX + 10 + "px") // Position the tooltip
+                          .style("top", event.pageY - (window.innerHeight/2) + "px");
+                      })
+                      .on("mouseout", function () {
+                        // Revert the styling on mouseout
+                        d3.select(this)
+                          .style("stroke-width", 0.1) // Revert stroke width
+                          .style("opacity", 1); // Revert opacity
+            
+                        tooltip.style("opacity", 0); // Hide the tooltip
+                      });
+            
+                    d3.select(self.frameElement).style("height", diameter + "px");
+                  }
+            
+                  // Function to calculate the padding dynamically based on the number of bubbles
+                  function calculatePadding(numBubbles, diameter) {
+                    // Calculate the padding dynamically based on the number of bubbles
+                    // Adjust the scaling factor as needed to control the spacing
+                    var scaleFactor = 10;
+                    var minPadding = 1; // Minimum padding
+                    return Math.max(minPadding, diameter / (numBubbles * scaleFactor) - 1);
+                  }
+            
+                  // Define the color scale for continents
+                  var colorScale = d3
+    .scaleOrdinal()
+    .domain([
+        "Oceania",
+        "Europe",
+        "North America",
+        "Asia",
+        "South America",
+        "Africa",
+    ])
+    .range(d3.schemeCategory10);
+
+            
+                  // Create the legend
+                  var legend = d3
+              .select("#legend-container")
+              .append("svg")
+              .attr("width", 300)
+              .attr("height", 200)
+              .selectAll(".legend")
+              .data(colorScale.domain())
+              .enter()
+              .append("g")
+              .attr("class", "legend")
+              .attr("transform", function (d, i) {
+                return "translate(90," + i * 30 + ")"; // Modify the x-coordinate to shift left
+              });
+            
+            // Add colored rectangles
+            legend
+              .append("rect")
+              .attr("x", 20)
+              .attr("width", 30)
+              .attr("height", 30)
+              .style("fill", colorScale);
+            
+            // Add labels
+            legend
+              .append("text")
+              .attr("x", 60)
+              .attr("y", 18)
+              .attr("dy", ".35em")
+              .style("text-anchor", "start")
+              .style("font-size", "18px")
+              .text(function (d) {
+                return d;
+              });
+                  d3.csv("viz-7.csv")
+                    .then(function (data) {
+                      // Filter and create bubble chart for each continent
+                      [
+                        "Oceania",
+                        "Europe",
+                        "North America",
+                        "Asia",
+                        "South America",
+                        "Africa",
+                      ].forEach(function (continent) {
+                        var continentData = data.filter(function (d) {
+                          return d.Continent === continent && d.Year === "2016";
+                        });
+            
+                        // Sort data by Overweight Value in descending order
+                        continentData.sort(function (a, b) {
+                          return (
+                            parseFloat(b["Overweight Value"]) -
+                            parseFloat(a["Overweight Value"])
+                          );
+                        });
+                        // Select top 10 countries
+                        var top10 = continentData.slice(0, 10);
+                        createBubbleChart(top10, colorScale(continent), 50, continent);
+                      });
+                    })
+                    .catch(function (error) {
+                      console.error("Error loading data:", error);
+                    });
+            
+                  // Add event listener to update the chart based on slider value
+                  // Define a debounce function
+                  function debounce(func, wait) {
+                    let timeout;
+                    return function executedFunction(...args) {
+                      const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                      };
+                      clearTimeout(timeout);
+                      timeout = setTimeout(later, wait);
+                    };
+                  }
+            
+                  // Wrap your event listener callback with the debounce function
+                  document.getElementById("range").addEventListener(
+                    "input",
+                    debounce(function (event) {
+                      var selectedValue = event.target.value;
+                      d3.selectAll("svg").remove(); // Clear existing chart
+                      d3.csv("viz-7.csv")
+                        .then(function (data) {
+                          [
+                            "Oceania",
+                            "Europe",
+                            "North America",
+                            "Asia",
+                            "South America",
+                            "Africa",
+                          ].forEach(function (continent) {
+                            var continentData = data.filter(function (d) {
+                              return d.Continent === continent && d.Year === "2016";
+                            });
+            
+                            // Sort data by Overweight Value in descending order
+                            continentData.sort(function (a, b) {
+                              return (
+                                parseFloat(b["Overweight Value"]) -
+                                parseFloat(a["Overweight Value"])
+                              );
+                            });
+            
+                            // Select top 10 countries
+                            var top10 = continentData.slice(0, 10);
+                            createBubbleChart(
+                              top10,
+                              colorScale(continent),
+                              selectedValue,
+                              continent
+                            );
+                          });
+                        })
+                        .catch(function (error) {
+                          console.error("Error loading data:", error);
+                        });
+                    }, 300)
+                  );
+                  // Adjust the debounce wait time (in milliseconds) as needed
+                </script>
+                <div class="entry-content" id="interactions">
+                  <h1>Breakdown of Scatter Plot Visualization</h1>
+                  <br>
+                  <h2>Data Points:</h2>
+                  <ul>
+                      <li>The graph displays data points represented by bubbles positioned at various locations on the plot.</li>
+                      <li>Each bubble likely represents a country.</li>
+                  </ul>
+                  
+                  <h2>Axes:</h2>
+                  <ul>
+                      <li>The horizontal axis (X-axis) most likely encodes "Daily Calorie Intake from Fat" based on the label in the image.</li>
+                      <li>The vertical axis (Y-axis) likely represents "Daily Calorie Intake from Carbohydrates."</li>
+                  </ul>
+                  
+                  <h2>Color:</h2>
+                  <ul>
+                      <li>Each continent is represented by a distinct color, allowing for easy visual distinction between regions.</li>
+                      <li>For example, blue for North America, green for South America, etc.</li>
+                  </ul>
+                  
+                  <h2>Bubble Size:</h2>
+                  <ul>
+                      <li>The radius of the bubble seems to be proportional to the "Overweight Percentage" for the country it represents.</li>
+                      <li>Larger bubbles likely correspond to higher overweight rates.</li>
+                  </ul>
+                  
+                  <h2>Slider:</h2>
+                  <ul>
+                      <li>A slider is present at the bottom of the visualization, likely allowing users to select a specific "Overweight Rate" threshold.</li>
+                      <li>This enables filtering the data points.</li>
+                  </ul>
+                  
+                  <h2>Tooltip (possible):</h2>
+                  <ul>
+                      <li>While not explicitly mentioned, the prompt describes a tooltip functionality that might appear when hovering over a data point.</li>
+                      <li>The tooltip would reveal additional information like country name, specific values for caloric intake, and overweight rate.</li>
+                  </ul>
+                  
+                  <h2>Possible Interactions:</h2>
+                  <ul>
+                      <li><strong>Filtering by Overweight Rate:</strong> The slider allows users to dynamically filter the data points based on a chosen "Overweight Rate" threshold. This helps focus on countries with overweight rates exceeding a specific value.</li>
+                      <li><strong>Hovering for Tooltips (possible):</strong> If a tooltip feature exists, hovering over a data point might reveal additional context, such as the country name, its specific values for daily caloric intake from fat and carbohydrates, and its overweight rate percentage.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+
+      <!-- ========== Scripts ========== -->
+      <script src="js/jquery-3.1.1.min.js"></script>
+      <script src="js/menu.js"></script>
+      <script src="js/jquery.localScroll.min.js"></script>
+      <script src="js/jquery.scrollTo.min.js"></script>
+      <script src="js/SmoothScroll.js"></script>
+      <script src="js/wow.min.js"></script>
+
+      <!-- Definity JS -->
+      <script src="js/main.js"></script>
+      <script>
+      $(document).ready(function () {
+			var menuOffset = $("#cssmenu").offset().top;
+
+			$(window).scroll(function () {
+				if ($(window).scrollTop() > menuOffset - 50) {
+					$("#cssmenu").addClass("sticky-menu");
+					$("#cssmenu").addClass("increased-height");
+				} else {
+					$("#cssmenu").removeClass("sticky-menu");
+					$("#cssmenu").removeClass("increased-height");
+				}
+			});
+		});
+
+      </script>
+    </div>
+  </body>
+</html>

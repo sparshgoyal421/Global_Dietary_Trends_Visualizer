@@ -1,0 +1,266 @@
+var width = 1500;
+			var height = 1500;
+			var diameter = 300;
+			var duration = 2000;
+
+			d3.selectAll("input").on("change", change);
+
+			function change() {
+				if (this.value === "radialtree")
+					transitionToRadialTree();
+				else if (this.value === "radialcluster")
+					transitionToRadialCluster();
+				else if (this.value === "tree")
+					transitionToTree();
+				// else
+				//     transitionToCluster();
+			};
+
+
+			function transitionToRadialCluster() {
+
+				var nodes = radialCluster.nodes(root), // recalculate layout
+					links = radialCluster.links(nodes);
+
+
+				svg.transition().duration(duration)
+					.attr("transform", "translate(" + (width / 2.5) + "," +
+						(height / 2) + ")");
+				// set appropriate translation (origin in middle of svg)
+
+				link.data(links)
+					.transition()
+					.duration(duration)
+					.style("stroke", linkColor)
+					.attr("d", radialDiagonal); //get the new radial path
+
+				node.data(nodes)
+					.transition()
+					.duration(duration)
+					.attr("transform", function (d) {
+						return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
+					});
+
+				node.select("circle")
+					.transition()
+					.duration(duration)
+					.style("fill", function (d) {
+						// Check if the node's name contains specific keywords
+						if (d.name && d.name.toLowerCase().includes("protein")) {
+							return "red";  // Color for nodes with "protein"
+						} else if (d.name && d.name.toLowerCase().includes("carbs")) {
+							return "blue";  // Color for nodes with "carbs"
+						} else if (d.name && d.name.toLowerCase().includes("fats")) {
+							return "green";  // Color for nodes with "fats"
+						} else if (d.name && d.name.toLowerCase().includes("vitamin")) {
+							return "orange";  // Color for nodes with "vitamin"
+						} else if (d.name && (d.name.toLowerCase().includes("minerals") ||
+							d.name.toLowerCase().includes("iron") ||
+							d.name.toLowerCase().includes("calcium"))) {
+							return "black";  // Color for nodes with "minerals", "iron", "calcium"
+						} else {
+							return "#4daf4a"; // Default color for other nodes
+						}
+					});
+
+			};
+
+			function transitionToTree() {
+
+				var nodes = tree.nodes(root), //recalculate layout
+					links = tree.links(nodes);
+
+				svg.transition().duration(duration)
+					.attr("transform", "translate(40,0)");
+
+				link.data(links)
+					.transition()
+					.duration(duration)
+					.style("stroke", linkColor)
+					.attr("d", diagonal); // get the new tree path
+
+				node.data(nodes)
+					.transition()
+					.duration(duration)
+					.attr("transform", function (d) {
+						return "translate(" + d.y + "," + d.x + ")";
+					});
+
+				node.select("circle")
+					.transition()
+					.duration(duration)
+					.style("stroke", "#377eb8");
+
+			};
+
+			function linkColor(d) {
+				// Check if the source or target node's name contains "protein"
+				if ((d.source.name && d.source.name.toLowerCase().includes("protein")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("protein"))) {
+					return "red";  // Color for links with "protein"
+				} else if ((d.source.name && d.source.name.toLowerCase().includes("carbs")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("carbs")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("roti")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("rice")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("quinoa")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("oats"))) {
+					return "blue";  // Default color for other links
+				}
+
+				else if ((d.source.name && d.source.name.toLowerCase().includes("fats")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("fats"))) {
+					return "green";  // Default color for other links
+				}
+				else if ((d.source.name && d.source.name.toLowerCase().includes("vitamin")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("vitamin"))) {
+					return "orange";  // Default color for other links
+				}
+				else if ((d.target.name && d.target.name.toLowerCase().includes("minerals")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("iron")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("calcium"))) {
+					return "black";  // Default color for other links
+				}
+				else if ((d.target.name && d.target.name.toLowerCase().includes("potato")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("broccoli")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("spinache")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("sugar")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("honey")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("syrup")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("apple")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("banana")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("oranges")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("pizza")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("burger")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("dog")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("chips"))) {
+					return "blue";
+				}
+				else if ((d.target.name && d.target.name.toLowerCase().includes("egg")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("almond")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("sunflower")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("pork"))
+				) {
+					return "orange";
+				}
+				else if ((d.target.name && d.target.name.toLowerCase().includes("red")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("spinach")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("milk")) ||
+					(d.target.name && d.target.name.toLowerCase().includes("yogurt"))
+				) {
+					return "black";
+				}
+				else {
+					return "#e78ac3";
+				}
+			}
+			var tree = d3.layout.tree()
+				.size([height, width - 160])
+				.separation(function (a, b) {
+					if (a.parent == b.parent) {
+						// If the nodes have the same parent, use the default separation
+						return 0.5;
+					} else {
+						// If the nodes have different parents, adjust the separation based on depth
+						if (a.depth === 0 || b.depth === 0) {
+							// If either node is the root (depth 0), use a smaller separation
+							return 1;
+						} else if (!a.children && !b.children) {
+							// If both nodes are leaf nodes, increase the separation
+							return 2 / a.depth;
+						} else {
+							// For other cases, use the default separation
+							return 1 / a.depth;
+						}
+					}
+				});
+
+
+			var cluster = d3.layout.cluster()
+				.size([height, width - 160]);
+
+			var diagonal = d3.svg.diagonal()
+				.projection(function (d) {
+					return [d.y, d.x];
+				});
+
+			var radialTree = d3.layout.tree()
+				.size([360, 1 * diameter])
+				.separation(function (a, b) {
+					return (a.parent == b.parent ? 1 : 2) / a.depth;
+				});
+
+			var radialCluster = d3.layout.cluster()
+				.size([360, 1.8 * diameter])
+				.separation(function (a, b) {
+					return (a.parent == b.parent ? 1 : 2) / a.depth;
+				});
+
+			var radialDiagonal = d3.svg.diagonal.radial()
+				.projection(function (d) {
+					return [d.y, d.x / 180 * Math.PI];
+				});
+
+
+			var svg = d3.select("#graph").append("svg")
+				.attr("width", width)
+				.attr("height", height)
+				.append("g")
+				.attr("transform", "translate(40,0)");
+
+			var root = getData(),
+				nodes = tree.nodes(root),
+				links = tree.links(nodes);
+
+			var link = svg.selectAll(".link")
+				.data(links)
+				.enter()
+				.append("path")
+				.attr("class", "link")
+				.style("stroke", "#e78ac3")  // Apply the link color
+				.attr("d", diagonal);
+
+			var node = svg.selectAll(".node")
+				.data(nodes)
+				.enter()
+				.append("g")
+				.attr("class", "node")
+				.attr("transform", function (d) {
+					return "translate(" + d.y + "," + d.x + ")";
+				})
+
+			node.append("circle")
+				.attr("r", 4.5)
+				.style("stroke", "#e41a1c");
+			node.append("text")
+				.attr("dx", function (d) { return d.children ? -15 : 10; }) // shift text to the left for children, right for parents
+				.attr("dy", 3) // vertical alignment
+				.style("text-anchor", function (d) { return d.children ? "end" : "start"; }) // anchor text at end for children, start for parents
+				.style("font-size", "10px") // Set font size to 12 pixels
+				.text(function (d) { return d.name; }); // display node name as text
+			node.on("mouseover", function (event, d) {
+				d3.select(this).select("circle")
+					.transition()
+					.duration(200)
+					.attr("r", 10) // Increase circle radius on hover
+					.style("stroke-width", 3); // Make stroke width thicker on hover
+
+				d3.select(this).select("text")
+					.transition()
+					.duration(200)
+					.style("font-weight", "bold") // Make text bold on hover
+					.style("font-size","16px")
+					
+			})
+				.on("mouseout", function (event, d) {
+					d3.select(this).select("circle")
+						.transition()
+						.duration(200)
+						.attr("r", 4.5) // Revert circle radius when mouse leaves
+						.style("stroke-width", null); // Revert stroke width
+
+					d3.select(this).select("text")
+						.transition()
+						.duration(200)
+						.style("font-size","10px")
+						.style("font-weight", null); // Revert font weight
+				});

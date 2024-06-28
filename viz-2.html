@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Visualization 2</title>
+  <meta name="description" content="Free Responsive Html5 Css3 Templates | zerotheme.com" />
+  <meta name="author" content="www.zerotheme.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link href="css/zerogrid.css" rel="stylesheet" media="all" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" media="all" type="text/css" />
+  <link href="css/menu.css" rel="stylesheet" media="all" type="text/css" />
+  <link href="css/animate.css" rel="stylesheet" media="all" type="text/css" />
+  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="owl-carousel/owl.carousel.css" rel="stylesheet" />
+</head>
+
+<body id="page-top" class="sub-page">
+  <div class="wrap-body">
+    <header>
+      <div class="wrap-header">
+        <div class="main-header" style="background-image: url(images/dark-world-decorative-image.png)">
+          <div class="bg-overlay">
+            <div class="hero-content-wrapper">
+              <div class="hero-content">
+                <h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">Scatter Plot</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="cssmenu">
+      <ul style="display: flex;justify-content: center">
+        <li class="active">
+          <a href="index.html#chart-2"><span>Back</span></a>
+        </li>
+        <li>
+          <a href="#chart-top"><span>Visualization</span></a>
+        </li>
+        <li>
+          <a href="#interactions"><span>Interaction</span></a>
+        </li>
+      </ul>
+    </div>
+
+    <!--////////////////////////////////////Container-->
+    <section id="page-content">
+      <div class="wrap-container zerogrid" id="chart-top">
+        <div id="about-us">
+          <article class="post-entry single-post">
+            <div class="wrap-post">
+              <div class="entry-header">
+                <h1 class="entry-title">Colorful Calories: Mapping Diet Choices to Body Mass Index</h1>
+              </div>
+              <div class="chart-container-2">
+                <script src="https://d3js.org/d3.v6.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+                <style>
+
+                  .tooltip {
+                          position: absolute;
+                          /* padding: 5px; */
+                          font-size: 21px;
+                          background-color: #fff;
+                          border: 1px solid #ccc;
+                          font-weight: bold;
+                          border-radius: 15px;
+                          opacity: 0; /* Initially hidden */
+                          font-family: Arial, Helvetica, sans-serif;
+                          pointer-events: none; /* Disable pointer events */
+                          user-select: none; /* Disable text selection */
+                        }
+
+                  .text {
+                    font-size: 23px;
+                    color: #494949;
+                  }
+
+                  .toggle {
+                    position: relative;
+                    width: 40px;
+                    height: 20px;
+                    border: 2px solid #494949;
+                    border-radius: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: .3s;
+                  }
+
+                  .circle {
+                    position: absolute;
+                    left: 0;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 20px;
+                    background-color: #494949;
+                    transition: .3s;
+                  }
+
+                  .active {
+                    border-color: rgb(85, 227, 180);
+                  }
+
+                  .active+.text {
+                    color: rgb(85, 227, 180);
+                  }
+
+                  .active .circle {
+                    left: 100%;
+                    transform: translateX(-100%);
+                    transition: .3s;
+                    background-color: rgb(85, 227, 180);
+                  }
+                </style>
+                <!-- Create a div where the graph will take place -->
+                <div class="container">
+                  <div class="toggle" onclick="toggle()">
+                    <div class="circle"></div>
+                  </div>
+                  <span class="text">Male</span>
+                </div>
+                <div id="my_dataviz"></div>
+                <div id="legend"></div>
+                <script src="viz-2.js"></script>
+              </div>
+
+              <div class="entry-content" id="interactions">
+                <div class="excerpt">
+
+                  <h1>Data Representation in Scatter Plot</h1>
+
+                  <h2>Scatter Plot:</h2>
+                  <ul style="font-size: 20px">
+                    <li>The visualization uses a scatter plot, where each data point represents a country.</li>
+                    <li>The position of a data point along the horizontal axis encodes the daily caloric intake from
+                      carbohydrates.</li>
+                    <li>The vertical axis encodes the daily caloric intake from fats.</li>
+                    <li>Each point is color graded based on the average male/female BMI of that country.</li>
+                  </ul>
+
+                  <h2>Color Grading:</h2>
+                  <ul style="font-size: 20px">
+                    <li>The color scale represents the average BMI of males and females in each country.</li>
+                    <li>Users have the option to toggle between male and female BMI views.</li>
+                    <li>Countries with a female BMI average are colored in shades of red, while male BMI averages are
+                      in shades of blue.</li>
+                  </ul>
+
+                  <h2>Interactions:</h2>
+                  <ul style="font-size: 20px">
+                    <li><strong>Hover Tooltip</strong> The tooltip provides additional information:</li>
+                    <li>Upon hovering over a data point, the tooltip displays the following:</li>
+                    <ul>
+                      <li>Country Name</li>
+                      <li>X Value: Daily Caloric Intake from Fat</li>
+                      <li>Y Value: Daily Caloric Intake from Carbohydrates</li>
+                      <li>BMI Value of the selected gender (male or female)</li>
+                    </ul>
+                  </ul>
+                  <ul style="font-size: 20px">
+                    <li><strong>Gender Toggle:</strong>>User have the option to toggle between the data of Male and Female average BMI data</li>
+                  </ul>
+                </div>
+              </div>
+          </article>
+        </div>
+      </div>
+
+
+      <!-- ========== Scripts ========== -->
+      <script src="js/jquery-3.1.1.min.js"></script>
+      <script src="js/menu.js"></script>
+      <script src="js/jquery.localScroll.min.js"></script>
+      <script src="js/jquery.scrollTo.min.js"></script>
+      <script src="js/SmoothScroll.js"></script>
+      <script src="js/wow.min.js"></script>
+
+      <!-- Definity JS -->
+      <script src="js/main.js"></script>
+      <script>
+        $(document).ready(function () {
+          var menuOffset = $("#cssmenu").offset().top;
+
+          $(window).scroll(function () {
+            if ($(window).scrollTop() > menuOffset - 50) {
+              $("#cssmenu").addClass("sticky-menu");
+              $("#cssmenu").addClass("increased-height");
+            } else {
+              $("#cssmenu").removeClass("sticky-menu");
+              $("#cssmenu").removeClass("increased-height");
+            }
+          });
+        });
+
+      </script>
+  </div>
+</body>
+
+</html>

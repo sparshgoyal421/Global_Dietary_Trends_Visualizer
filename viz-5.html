@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Visualization 5</title>
+    <meta name="description" content="Free Responsive Html5 Css3 Templates | zerotheme.com" />
+    <meta name="author" content="www.zerotheme.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="css/zerogrid.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/menu.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/animate.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="owl-carousel/owl.carousel.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="viz-5.css" />
+    <script src="https://d3js.org/d3.v2.js"></script>
+    <script src="https://underscorejs.org/underscore.js"></script>
+  </head>
+  <body id="page-top" class="sub-page">
+    <div class="wrap-body">
+      <header>
+        <div class="wrap-header">
+          <div class="main-header" style="background-image: url(images/dark-world-decorative-image.png)">
+            <div class="bg-overlay">
+              <div class="hero-content-wrapper">
+                <div class="hero-content">
+                  <h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">Parallel Coordinates</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+		</div>
+		</header>
+		<div id="cssmenu" >
+		  <ul style="display: flex;justify-content: center">
+			<li class="active">
+			  <a href="index.html#chart-5"><span>Back</span></a>
+			</li>
+			<li>
+			  <a href="#chart-top"><span>Visualization</span></a>
+			</li>
+			<li>
+			  <a href="#interactions"><span>Interaction</span></a>
+			</li>
+		  </ul>
+		</div>
+
+      <!--////////////////////////////////////Container-->
+      <section id="page-content" >
+        <div class="wrap-container zerogrid" id="chart-top">
+          <div id="about-us">
+            <article class="post-entry single-post">
+              <div class="wrap-post">
+                <div class="entry-header">
+                  <h1 class="entry-title">A Brush with Disease: Top Countries by Health Risk</h1>
+                </div>
+                <div id="chart">
+                  <canvas id="background"></canvas>
+                    <canvas id="foreground"></canvas>
+                    <canvas id="highlight"></canvas>
+                    <svg></svg>
+                  </div>
+                  <div id="wrap">
+                    <div class="third" id="controls">
+                      <div class="little-box">
+                        <h3>Controls</h3>
+                        <p>
+                          <strong>Brush</strong>: Drag vertically along an axis.<br />
+                          <strong>Remove Brush</strong>: Tap the axis background.<br />
+                        </p>
+                      </div>
+                    </div>
+                    <div class="third">
+                      <small></small>
+                      <h3>Continents</h3>
+                      <p id="legend"></p>
+                    </div>
+                    <div class="third">
+                      <h3>Top 25 Countries (Alphabetically)</h3>
+                      <p id="country-list"></p>
+                    </div>
+                  </div>   
+                </div>           
+                <div class="entry-content" id="interactions">
+                  <p>This visualization presents health risk factors across various countries. The x-axis displays a range of potential health risks, including cardiovascular diseases, digestive diseases, body mass index (BMI), blood sugar testing rates, and protein-energy malnutrition.</p>
+                  <h2>Data Representation (Assumptions):</h2>
+                  <ul>
+                  <li>The y-axis likely represents the number of people at risk for a particular health condition within a country. However, a definitive label is missing.</li>
+                  <li>Alternatively, the y-axis might indicate the severity or prevalence of the health risk factor itself.</li>
+                  <li>Dots on the graph likely represent individual countries, with their color potentially corresponding to a BMI range (legend details are unavailable).</li>
+                  </ul>
+                  <h2>Possible Interactions (Assumptions):</h2>
+                  <ul>
+                  <li>Controls (legend entry): This functionality might allow users to filter data by continent (Oceania and South America are identified) or by specific health risk factors. Confirmation depends on the specific visualization tool.</li>
+                  <li>Remove Brush (legend entry): This option likely allows users to deselect any highlighted areas on the chart, potentially used to focus on specific regions or health risks. Confirmation depends on the specific visualization tool.</li>
+                  <li>Beckpoint (legend entry): This term appears to be a typo or specific tool terminology. Without further information, its function remains unclear.</li>
+                  </ul>
+                  <p>Important Note: The legend and additional details are unavailable for a complete understanding of the visualization. The explanations provided are based on common data visualization practices and may require further clarification depending on the specific tool used to create the chart.</p>
+                                  </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+
+      <!-- ========== Scripts ========== -->
+      <script src="js/jquery-3.1.1.min.js"></script>
+      <script src="js/menu.js"></script>
+      <script src="js/jquery.localScroll.min.js"></script>
+      <script src="js/jquery.scrollTo.min.js"></script>
+      <script src="js/SmoothScroll.js"></script>
+      <script src="js/wow.min.js"></script>
+
+      <!-- Definity JS -->
+      <script src="js/main.js"></script>
+      <script>
+      $(document).ready(function () {
+			var menuOffset = $("#cssmenu").offset().top;
+
+			$(window).scroll(function () {
+				if ($(window).scrollTop() > menuOffset - 50) {
+					$("#cssmenu").addClass("sticky-menu");
+					$("#cssmenu").addClass("increased-height");
+				} else {
+					$("#cssmenu").removeClass("sticky-menu");
+					$("#cssmenu").removeClass("increased-height");
+				}
+			});
+		});
+
+      </script>
+        <script src="viz-5.js"></script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Nutrient Database Explorer</title>
+    <link rel="stylesheet" type="text/css" href="../viz-5.css" />
+  </head>
+  <body>
+    <div id="chart">
+    <canvas id="background"></canvas>
+      <canvas id="foreground"></canvas>
+      <canvas id="highlight"></canvas>
+      <svg></svg>
+    </div>
+    <div id="wrap">
+      <div class="third" id="controls">
+        <div class="little-box">
+          <h3>Controls</h3>
+          <p>
+            <strong>Brush</strong>: Drag vertically along an axis.<br />
+            <strong>Remove Brush</strong>: Tap the axis background.<br />
+          </p>
+        </div>
+      </div>
+      <div class="third">
+        <small></small>
+        <h3>Continents</h3>
+        <p id="legend"></p>
+      </div>
+      <div class="third">
+        <h3>Top 25 Countries</h3>
+        <p id="country-list"></p>
+      </div>
+    </div>
+  </body>
+  <script src="https://d3js.org/d3.v2.js"></script>
+  <script src="https://underscorejs.org/underscore.js"></script>
+  <script src="../viz-5.js"></script>
+</html>

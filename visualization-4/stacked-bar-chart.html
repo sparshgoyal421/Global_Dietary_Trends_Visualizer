@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stacked Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      svg {
+        display: block;
+        margin: 0 auto;
+      }
+      /* CSS for dropdown */
+      #nutrient-select {
+        padding: 8px 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+        appearance: none;
+      }
+
+      #nutrient-select option {
+        font-size: 16px;
+      }
+
+      /* CSS for dropdown container */
+      .dropdown-container {
+        margin-bottom: 20px;
+      }
+
+      /* Tooltip CSS */
+      .tooltip {
+        position: absolute;
+        background-color: white;
+        border: 1px solid black;
+        padding: 5px;
+        pointer-events: none; /* Ensure tooltip doesn't interfere with mouse events on elements */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dropdown-container">
+      <label for="nutrient-select">Select Nutrient:</label>
+      <select id="nutrient-select">
+        <option value="All">All</option>
+        <option value="Animal Protein">Animal Protein</option>
+        <option value="Vegetal Protein">Vegetal Protein</option>
+        <option value="Carbohydrates">Carbohydrates</option>
+        <option value="Fat">Fat</option>
+      </select>
+    </div>
+
+    <div class="tooltip" style="opacity: 0"></div>
+
+    <script>
+      let svg; // Define svg globally
+
+      function createStackedBarChart(data, selectedNutrient) {
+        console.log(data); // Check if data is loaded correctly
+
+        // Filter data for the year 2018
+        const filteredData = data.filter((d) => d.Year === "2018");
+
+        // Prepare data for each country
+        const countryData = d3.rollup(
+          filteredData,
+          (v) => {
+            const totalCalories = d3.sum(v, (d) => d.Calories);
+            const nutrientValues = {
+              "Animal Protein": d3.sum(v, (d) => d["Animal Protein"]),
+              "Vegetal Protein": d3.sum(v, (d) => d["Vegetal Protein"]),
+              Carbohydrates: d3.sum(v, (d) => d["Carbohydrates"]),
+              Fat: d3.sum(v, (d) => d["Fat"]),
+            };
+            return {
+              totalCalories: totalCalories,
+              nutrientValues: nutrientValues,
+              GDP: v[0].GDP, // Take the GDP value of the first entry for each country
+            };
+          },
+          (d) => d.Country
+        );
+
+        // Convert map to array for easier manipulation
+        let countryArray = Array.from(countryData, ([country, values]) => ({
+          country,
+          ...values,
+        }));
+
+        // Sort countries based on the selected nutrient values
+        countryArray.sort((a, b) => {
+          return a.GDP - b.GDP;
+        });
+
+        // Group countryArray into chunks of 43
+        const chunkedCountryArray = [];
+        for (let i = 0; i < countryArray.length; i += 43) {
+          chunkedCountryArray.push(countryArray.slice(i, i + 48));
+        }
+
+        // Define background colors for each group
+        const backgroundColors = ["#c8e5a7", "#80e285", "#37b388", "#00876a"];
+
+        // Define chart dimensions
+        const margin = { top: 50, right: 50, bottom: 150, left: 50 }; // Increased bottom margin to accommodate rotated labels
+        const width = window.innerWidth - margin.left - margin.right;
+        const height = window.innerHeight - margin.top - margin.bottom;
+
+        // Remove existing SVG if it exists
+        d3.select("svg").remove();
+
+        // Create SVG element
+        svg = d3
+          .select("body")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Create scales
+        const xScale = d3
+          .scaleBand()
+          .domain(countryArray.map((d) => d.country))
+          .range([0, width])
+          .padding(0.1);
+
+        function getMaxValue(selectedNutrient) {
+          if (selectedNutrient === "All") {
+            return d3.max(countryArray, (d) => d.totalCalories) + 300;
+          } else {
+            return d3.max(countryArray, (d) => d.nutrientValues[selectedNutrient]) + 100;
+          }
+        }
+        const yScale = d3
+          .scaleLinear()
+          .domain([0, getMaxValue(selectedNutrient)]) // Use the getMaxValue function
+          .range([height, 0]);
+
+        // Define colors for nutrients
+        const color = d3.scaleOrdinal().domain(["Fat", "Carbohydrates", "Vegetal Protein", "Animal Protein"]).range(["#e05d31", "#d4a237", "#3893a1", "#3860a1"]); // Use rich and vibrant colors
+
+        // Stack nutrient values
+        const stack = d3.stack().keys(["Animal Protein", "Vegetal Protein", "Carbohydrates", "Fat"]);
+        const stackedData = stack(
+          countryArray.map((d) => {
+            return d.nutrientValues;
+          })
+        );
+
+        // Create tooltip element
+        const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+        // Draw background rectangles for each group and add text
+        chunkedCountryArray.forEach((group, index) => {
+          const barWidth = xScale.bandwidth() * group.length * 1.11;
+          const barX = xScale(group[0].country);
+          const barY = 0;
+          const barHeight = height;
+
+          const labels = ["Low Income", "Lower Middle Income", "Higher Middle Income", "Higher Income"];
+          // Add background rectangle
+          svg.append("rect").attr("x", barX).attr("y", barY).attr("width", barWidth).attr("height", barHeight).attr("fill", backgroundColors[index]).style("z-index", 0);
+          // Define labels
+
+          // Add text on top of background region
+          svg
+            .append("text")
+            .attr("x", barX + barWidth / 2)
+            .attr("y", barY + 20)
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "middle")
+            .style("fill", "black")
+            .style("font-size", "35px")
+            .text(labels[index]); // Use the label corresponding to the current index
+        });
+
+        // Draw stacked bars
+        const barsGroup = svg
+          .selectAll(".bar")
+          .data(stackedData)
+          .enter()
+          .append("g")
+          .attr("fill", (d) => color(d.key))
+          .style("z-index", 1); // Set a higher z-index for the bars
+
+        barsGroup
+          .selectAll("rect")
+          .data((d, i) => {
+            if (selectedNutrient === "All") {
+              // If "All" is selected, return all bars for all nutrients
+              return d.map((value, index) => ({
+                country: countryArray[index].country,
+                key: d.key,
+                value: value,
+              }));
+            } else if (selectedNutrient === d.key) {
+              // If a specific nutrient is selected, return bars only for that nutrient
+              return d.map((value, index) => ({
+                country: countryArray[index].country,
+                key: d.key,
+                value: value,
+              }));
+            } else {
+              // Return an empty array if the nutrient is not selected
+              return [];
+            }
+          })
+          .enter()
+          .append("rect")
+          .attr("class", "nutrient-bar")
+          .attr("x", (d) => xScale(d.country))
+          .attr("y", (d) => {
+            if (selectedNutrient === "All") {
+              return yScale(d.value[1]);
+            }
+            return yScale(-d.value[0] + d.value[1]);
+          })
+          .attr("height", (d) => {
+            if (selectedNutrient === "All") {
+              return yScale(d.value[0]) - yScale(d.value[1]);
+            }
+            return yScale(d.value[0]) - yScale(d.value[1]);
+          })
+          .attr("width", xScale.bandwidth())
+          .on("mouseover", function (event, d) {
+            // Show tooltip on mouseover
+            const tooltipWidth = tooltip.node().offsetWidth;
+            const tooltipHeight = tooltip.node().offsetHeight;
+            const xPos = event.pageX - tooltipWidth / 2;
+            const yPos = event.pageY - tooltipHeight - 10; // Adjust for spacing
+            tooltip
+              .style("opacity", 1)
+              .style("left", xPos + "px")
+              .style("top", yPos + "px")
+              .html(`${d.key}: ${d.value[1] - d.value[0]}`);
+          })
+          .on("mouseout", function () {
+            // Hide tooltip on mouseout
+            tooltip.style("opacity", 0);
+          });
+        // Draw X axis with rotated labels
+        svg
+          .append("g")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(xScale))
+          .selectAll("text")
+          .attr("transform", "rotate(-90)") // Rotate labels by -45 degrees
+          .style("text-anchor", "end") // Adjust text anchor
+          .attr("dx", "-.8em") // Adjust x position
+          .attr("dy", ".15em"); // Adjust y position
+
+        // Remove existing y-axis
+        svg.select(".y-axis").remove();
+
+        // Draw updated Y axis
+        svg.append("g").attr("class", "y-axis").call(d3.axisLeft(yScale));
+
+        // Draw legend
+        const legend = svg
+          .selectAll(".legend")
+          .data(["Fat", "Animal Protein", "Vegetal Protein", "Carbohydrates"])
+          .enter()
+          .append("g")
+          .attr("class", "legend")
+          .attr("transform", (d, i) => `translate(${width - (i + 1) * 130}, ${height - window.innerHeight * 0.83})`); // Adjust legend position
+
+        legend
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", (d) => color(d));
+
+        legend
+          .append("text")
+          .attr("x", 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .text((d) => d);
+      }
+
+      // Load data from CSV
+      d3.csv("viz-4.csv", (d) => ({
+        Country: d.Country,
+        GDP: +d.GDP,
+        "Animal Protein": +d["Animal Protein"],
+        "Vegetal Protein": +d["Vegetal Protein"],
+        Carbohydrates: +d["Carbohydrates"],
+        Fat: +d["Fat"],
+        Calories: +d.Calories,
+        Year: d.Year,
+      })).then(function (data) {
+        // Initialize with "All" nutrient selected
+        createStackedBarChart(data, "All");
+
+        // Event listener for nutrient selection change
+        document.getElementById("nutrient-select").addEventListener("change", function () {
+          const selectedNutrient = this.value;
+          createStackedBarChart(data, selectedNutrient);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Visualization X</title>
+    <meta name="description" content="Free Responsive Html5 Css3 Templates | zerotheme.com" />
+    <meta name="author" content="www.zerotheme.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="css/zerogrid.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/menu.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="css/animate.css" rel="stylesheet" media="all" type="text/css" />
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="owl-carousel/owl.carousel.css" rel="stylesheet" />
+  </head>
+  <body id="page-top" class="sub-page">
+    <div class="wrap-body">
+      <header>
+        <div class="wrap-header">
+          <div class="main-header" style="background-image: url(images/hero.jpg)">
+            <div class="bg-overlay">
+              <div class="hero-content-wrapper">
+                <div class="hero-content">
+                  <h4 class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay=".7s">Visualization x</h4>
+                  <h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">Chart Name</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+		</div>
+		</header>
+		<div id="cssmenu" >
+		  <ul style="display: flex;justify-content: center">
+			<li class="active">
+			  <a href="index.html"><span>Back</span></a>
+			</li>
+			<li>
+			  <a href="#chart-top"><span>Visualization</span></a>
+			</li>
+			<li>
+			  <a href="#interactions"><span>Interaction</span></a>
+			</li>
+		  </ul>
+		</div>
+
+      <!--////////////////////////////////////Container-->
+      <section id="page-content" >
+        <div class="wrap-container zerogrid" id="chart-top">
+          <div id="about-us">
+            <article class="post-entry single-post">
+              <div class="wrap-post">
+                <div class="entry-header">
+                  <h1 class="entry-title">Chart Title</h1>
+                </div>
+                <div class="post-thumbnail-wrap">
+                  <img src="images/single.jpg" />
+                </div>
+                <div class="entry-content" id="interactions">
+                  <div class="excerpt"><p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum exercitation ullamco laboris nisi ut aliquip.</p></div>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+                  <blockquote><p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet vultatup duista.</p></blockquote>
+                  <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril.</p>
+                  <h2>Heading 1</h2>
+                  <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse lorem ipsum dolor sit amet.</p>
+                  <h2>Heading 2</h2>
+                  <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis. At vero eos et accusam et justo.</p>
+                  <p><code>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</code></p>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                  <div class="note">
+                    <ol>
+                      <li>Lorem ipsum</li>
+                      <li>Sit amet vultatup nonumy</li>
+                      <li>Duista sed diam</li>
+                    </ol>
+                    <div class="clear"></div>
+                  </div>
+                  <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+
+      <!-- ========== Scripts ========== -->
+      <script src="js/jquery-3.1.1.min.js"></script>
+      <script src="js/menu.js"></script>
+      <script src="js/jquery.localScroll.min.js"></script>
+      <script src="js/jquery.scrollTo.min.js"></script>
+      <script src="js/SmoothScroll.js"></script>
+      <script src="js/wow.min.js"></script>
+
+      <!-- Definity JS -->
+      <script src="js/main.js"></script>
+      <script>
+      $(document).ready(function () {
+			var menuOffset = $("#cssmenu").offset().top;
+
+			$(window).scroll(function () {
+				if ($(window).scrollTop() > menuOffset - 50) {
+					$("#cssmenu").addClass("sticky-menu");
+					$("#cssmenu").addClass("increased-height");
+				} else {
+					$("#cssmenu").removeClass("sticky-menu");
+					$("#cssmenu").removeClass("increased-height");
+				}
+			});
+		});
+
+      </script>
+    </div>
+  </body>
+</html>
